@@ -20,4 +20,4 @@ This repo is for sharing about basics apache airflow.
 - run all airflow services
   ```
   docker compose up
-  ``` 
+  ```
