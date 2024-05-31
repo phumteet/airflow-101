@@ -9,11 +9,9 @@ default_args = {
     'start_date': datetime(2023, 1, 1),
 }
 def fetch_data(**kwargs):
-    url = 'http://example.com/data'
-    response = requests.get(url)
-    data = response.json() 
-    df = pd.DataFrame(data)
-    df.to_csv('/path/to/save/data.csv', index=False)
+    url = 'https://storage.googleapis.com/tao-isman/airflow/n_movies.csv'
+    df = pd.read_csv(url)
+    df.to_csv('./n_movies.csv', index=False)
 
 with DAG(
     'website_data_to_gcs',
