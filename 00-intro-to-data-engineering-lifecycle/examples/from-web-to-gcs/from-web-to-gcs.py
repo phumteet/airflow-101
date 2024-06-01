@@ -6,7 +6,7 @@ import requests
 import pandas as pd
 default_args = {
     'owner': 'airflow',
-    'start_date': datetime(2023, 1, 1),
+    'start_date': datetime(2024, 5, 31),
 }
 def fetch_data(**kwargs):
     url = 'https://storage.googleapis.com/tao-isman/airflow/n_movies.csv'
@@ -25,9 +25,10 @@ with DAG(
     )
     upload_to_gcs = LocalFilesystemToGCSOperator(
         task_id='upload_to_gcs',
-        src='/path/to/save/data.csv',
-        dst='destination-path/data.csv',
-        bucket='your-gcs-bucket',
+        src='./n_movies.csv',
+        dst='isaman/data.csv',
+        bucket='airflow-demo-odds',
         gcp_conn_id='google_cloud_default'
     )
-    fetch_and_save_data >> upload_to_gcs
+    
+fetch_and_save_data >> upload_to_gcs

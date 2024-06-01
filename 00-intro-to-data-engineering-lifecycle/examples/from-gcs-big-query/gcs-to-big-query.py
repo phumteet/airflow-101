@@ -1,3 +1,4 @@
+from datetime import timedelta
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.google.cloud.transfers.gcs_to_local import GCSToLocalFilesystemOperator
@@ -17,7 +18,7 @@ dag = DAG(
     'clean_and_upload_to_bigquery',
     default_args=default_args,
     description='A DAG to clean data and load CSV from GCS to BigQuery',
-    schedule_interval=None,  # Set as needed
+    schedule_interval=timedelta(days=1),
     start_date=days_ago(1),
     catchup=False,
 )
@@ -66,7 +67,7 @@ gcs_to_bq_task = GCSToBigQueryOperator(
     task_id='gcs_to_bigquery',
     bucket='airflow-demo-odds',  # Replace with your GCS bucket name
     source_objects=['isaman/cleaned_n_movies.csv'],
-    destination_project_dataset_table='airflow-class-424913.airlow_class_odds.movies_table',  # Replace with your project, dataset, and table
+    destination_project_dataset_table='airflow-class-424913.airlow_class_odds.movies',  # Replace with your project, dataset, and table
     schema_fields=[
         {'name': 'title', 'type': 'STRING', 'mode': 'NULLABLE'},
         {'name': 'year', 'type': 'STRING', 'mode': 'NULLABLE'},
